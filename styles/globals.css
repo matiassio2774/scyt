@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.downloader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 65%;
+  margin: 0 auto;
+  margin-top: 6rem;
+}
+
+.bar {
+  display: flex;
+    width: 60%;
+    margin-top: 3rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+    font-weight: 200;
+}
+
+.title {
+  font-weight: 900;
+  font-size: 3rem;
+}
