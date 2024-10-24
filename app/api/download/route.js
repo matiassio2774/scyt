@@ -17,11 +17,20 @@ export async function GET(req) {
     const info = await ytdl.getInfo(url);
     const title = info.videoDetails.title.replace(/[<>:"/\\|?*]+/g, '');
 
-    // Crear un stream de audio
+    // Descargar el audio completo a un buffer
+    const audioChunks = [];
     const audioStream = ytdl(url, { filter: 'audioonly', quality: 'highestaudio' });
 
-    // Retornar el stream como una respuesta
-    return new Response(audioStream, {
+    // Almacenar los chunks en un array de buffers
+    for await (const chunk of audioStream) {
+      audioChunks.push(chunk);
+    }
+
+    // Combinar los chunks en un único buffer
+    const audioBuffer = Buffer.concat(audioChunks);
+
+    // Retornar el buffer como una respuesta
+    return new Response(audioBuffer, {
       headers: {
         'Content-Type': 'audio/mpeg',
         'Content-Disposition': `attachment; filename="${title}.mp3"`,
