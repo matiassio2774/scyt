@@ -29,3 +29,11 @@
   font-weight: 900;
   font-size: 3rem;
 }
+
+div.rounded-medium {
+  border-radius: 10px 0 0 10px !important;
+}
+
+button.rounded-medium {
+  border-radius: 0 10px 10px 0;
+}

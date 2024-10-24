@@ -1,8 +1,14 @@
 'use client';
 import { SearchIcon } from "@/components/icons";
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Input } from "@nextui-org/input";
 import { Spinner } from "@nextui-org/spinner";
+import { Button } from "@nextui-org/button";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faDownload } from "@fortawesome/free-solid-svg-icons";
+config.autoAddCss = false;
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -53,6 +59,7 @@ export default function Home() {
         {loading ? (
           <Spinner color="primary" labelColor="primary" />
         ) : (
+          <Fragment>
           <Input
             value={url}
             classNames={{
@@ -68,6 +75,11 @@ export default function Home() {
             style={{ padding: '8px', marginRight: '10px' }}
             onKeyDown={handleEnterKey}
           />
+          <Button onClick={() => handleDownload()} isIconOnly color="success" aria-label="Like">
+            <FontAwesomeIcon icon={faDownload} className="fa fa-download" style={{ color: "white" }}
+            ></FontAwesomeIcon>
+          </Button> 
+          </Fragment>
         )}
       </div>
     </div>

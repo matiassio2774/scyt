@@ -1,6 +1,4 @@
-import { spawn } from 'child_process';
-import ytdl from 'ytdl-core';
-import path from 'path';
+import ytdl from '@distube/ytdl-core';
 
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
@@ -19,16 +17,11 @@ export async function GET(req) {
     const info = await ytdl.getInfo(url);
     const title = info.videoDetails.title.replace(/[<>:"/\\|?*]+/g, '');
 
-    const ytDlpPath = path.join(process.cwd(), 'bin', 'yt-dlp.exe');
+    // Crear un stream de audio
+    const audioStream = ytdl(url, { filter: 'audioonly', quality: 'highestaudio' });
 
-    const ytDlpProcess = spawn(ytDlpPath, [
-      url,
-      '--extract-audio',
-      '--audio-format', 'mp3',
-      '--output', '-',
-    ]);
-
-    return new Response(ytDlpProcess.stdout, {
+    // Retornar el stream como una respuesta
+    return new Response(audioStream, {
       headers: {
         'Content-Type': 'audio/mpeg',
         'Content-Disposition': `attachment; filename="${title}.mp3"`,
